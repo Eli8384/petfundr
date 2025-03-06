@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Rescue Fundraiser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .pet-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .progress {
+            width: 35%;
+            height: 20px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .donate-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .donate-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .complaint-btn {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Help Angel Walk Again</h1>
+    </div>
+
+    <img src="https://imgur.com/a/shtr96A" alt="Injured Cat Luna" class="pet-image">
+    <!-- Replace the image URL with your actual pet photo -->
+
+    <div class="content">
+        <p>Angel is a brave cat who survived a horrific fall and now fights for her life. Found abandoned and severely injured, Angel’s X-rays reveal multiple skull fractures, a misaligned jaw that prevents her from eating, and possible brain trauma. Despite her pain, she struggles to lift her head—a testament to her will to live. But without immediate surgery, her chances of survival are slim.  
+
+Angel’s injuries are devastating: Her shattered jaw must be surgically repaired to allow her to eat, and her skull fractures require delicate stabilization. While her spine shows no visible damage, her hind legs remain paralyzed, prompting vets to recommend an MRI to assess nerve damage and guide her rehabilitation. Worse, she’s battling kidney failure, requiring specialized fluids and medications.Every day without treatment risks irreversible organ damage or fatal complications.  
+
+Vets believe Angel can recover with timely intervention. Surgery could realign her jaw within days, and the MRI might reveal treatable nerve issues, offering hope that she’ll walk again. Your donation—whether $5 or $500—will fund these critical steps. I’ve covered initial costs from my savings, but I can’t do this alone.  
+
+From the bottom of my heart—thank you for being Angel’s miracle.  </p>
+        
+        <h3>Fundraising Progress</h3>
+        <div class="progress-bar">
+            <div class="progress" style="width: 35%">35%</div>
+        </div>
+
+        <a href="https://paypal.me/jinw142?country.x=C2&locale.x=zh_XC" class="donate-btn">Donate Now</a>
+        <!-- Replace PayPal link with your actual PayPal.me URL -->
+
+        <button class="donate-btn complaint-btn" onclick="openModal()">Report Issue</button>
+    </div>
+
+    <div id="complaintModal" class="modal">
+        <h3>Report an Issue</h3>
+        <form id="complaintForm" action="https://formspree.io/f/your-form-id" method="POST">
+            <!-- Replace formspree URL with your actual Formspree endpoint -->
+            <textarea name="complaint" placeholder="Please describe the issue..." required></textarea>
+            <input type="email" name="email" placeholder="Your email address" required>
+            <button type="submit" class="submit-btn">Submit Report</button>
+            <button type="button" onclick="closeModal()">Close</button>
+        </form>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('complaintModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('complaintModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('complaintModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert('Report submitted successfully!');
+                    closeModal();
+                } else {
+                    alert('Submission failed. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
